@@ -3,9 +3,10 @@ import {Home} from "./pages/Home.jsx";
 import {About} from "./pages/About.jsx";
 import {Support} from "./pages/Support.jsx";
 import {SingleUser} from "./pages/SingleUser.jsx";
+import {observer} from "mobx-react-lite";
 
 
-function App() {
+const App = observer(() => {
   return (
       <BrowserRouter>
           <Routes>
@@ -17,6 +18,6 @@ function App() {
           </Routes>
       </BrowserRouter>
   )
-}
+})
 
 export default App

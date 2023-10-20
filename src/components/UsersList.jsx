@@ -1,12 +1,14 @@
 import {Avatar, Button, List, Popconfirm, Space} from "antd";
 import {deleteUser} from "../api/index.js";
 import {DeleteOutlined} from "@ant-design/icons";
+import usersStore from "../store/users.js";
+import {observer} from "mobx-react-lite";
 
-export const UsersList = ({users}) => {
+export const UsersList = observer(() => {
     return (
         <List
             itemLayout="horizontal"
-            dataSource={users}
+            dataSource={usersStore.users}
             renderItem={(user) => (
                 <List.Item actions={[
                     <>
@@ -23,7 +25,16 @@ export const UsersList = ({users}) => {
                                 placement="topRight"
                                 title="Удалить пользователя"
                                 description="Вы действительно хотите удалить пользователя?"
-                                onConfirm={() => deleteUser(user.id)}
+                                onConfirm={() => {
+                                    deleteUser(user.id)
+                                    const newUsers = []
+                                    usersStore.users.map(currentUser => {
+                                        if (currentUser.id !== user.id) {
+                                            newUsers.push(currentUser)
+                                        }
+                                    })
+                                    usersStore.setUsers(newUsers)
+                                }}
                                 // onCancel={cancel}
                                 okText="Да"
                                 cancelText="Нет"
@@ -48,4 +59,4 @@ export const UsersList = ({users}) => {
             )}
         />
     )
-}
+})

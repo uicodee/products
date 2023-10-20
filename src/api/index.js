@@ -24,3 +24,15 @@ export const deleteUser = (userId) => {
         method: 'DELETE',
     }).then(res => res.json())
 }
+
+export const addUser = (firstName, lastName, age) => {
+    return fetch('https://dummyjson.com/users/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            firstName: firstName,
+            lastName: lastName,
+            age: age,
+        })
+    }).then(res => res.json())
+}
